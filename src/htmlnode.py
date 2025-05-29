@@ -31,7 +31,7 @@ class LeafNode(HTMLNode):
         if self.value is None:
             raise ValueError
         if self.tag is None:
-            return value
+            return self.value
         return f"<{self.tag}>{self.value}</{self.tag}>"
 
 class ParentNode(HTMLNode):
