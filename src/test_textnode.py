@@ -1,6 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType
+from block_markdown import markdown_to_blocks
 
 
 class TestTextNode(unittest.TestCase):
