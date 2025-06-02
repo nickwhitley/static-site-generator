@@ -5,6 +5,7 @@ from block_markdown import (
     markdown_to_blocks,
     block_to_block_type,
     BlockType,
+    extract_title
     )
 
 
@@ -57,6 +58,17 @@ tag here
             html,
             "<div><p>This is <b>bolded</b> paragraph text in a p tag here</p></div>",
         )
+
+    def test_extract_title(self):
+        md = """
+# This is a heading
+
+text in a p
+tag here
+
+"""
+        title = extract_title(md)
+        self.assertEqual("# This is a heading", title)
 
     def test_paragraphs(self):
         md = """

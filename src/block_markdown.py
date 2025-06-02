@@ -49,6 +49,7 @@ def markdown_to_blocks(markdown):
         result_lines.append(trimmed_line)
     return result_lines
 
+
 def markdown_to_html_node(markdown):
     blocks = markdown_to_blocks(markdown)
     children = []
@@ -56,6 +57,13 @@ def markdown_to_html_node(markdown):
         html_node = block_to_html_node(block)
         children.append(html_node)
     return ParentNode("div", children, None)
+
+
+def extract_title(markdown):
+    blocks = markdown_to_blocks(markdown)
+    if blocks[0].startswith('# '):
+        return blocks[0]
+    raise Exception("Missing markdown heading") 
 
 
 def block_to_html_node(block):
