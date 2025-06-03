@@ -10,7 +10,7 @@ class TextType(Enum):
     IMAGE = 'image'
 
 class TextNode:
-    def __init__(self, text, text_type: TextType, url = None):
+    def __init__(self, text, text_type, url=None):
         self.text = text
         self.text_type = text_type
         self.url = url
@@ -36,9 +36,11 @@ def text_node_to_html_node(text_node):
         case TextType.CODE:
             return LeafNode("code", text_node.text)
         case TextType.LINK:
-            return LeafNode("a", text_node.text, None, {"href": text_node.url})
+            return LeafNode("a", text_node.text, {"href": text_node.url})
         case TextType.IMAGE:
-            return LeafNode("img", "", None, {"src": text_node.url, "alt": text_node.text})
+            return LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
+        
+    raise ValueError(f"invalid text type: {text_node.text_type}")
 
 
 

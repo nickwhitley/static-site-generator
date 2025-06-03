@@ -61,8 +61,9 @@ def markdown_to_html_node(markdown):
 
 def extract_title(markdown):
     blocks = markdown_to_blocks(markdown)
-    if blocks[0].startswith('# '):
-        return blocks[0]
+    for block in blocks:
+        if block.startswith('# '):
+            return block
     raise Exception("Missing markdown heading") 
 
 
@@ -153,13 +154,3 @@ def quote_to_html_node(block):
     content = " ".join(new_lines)
     children = text_to_children(content)
     return ParentNode("blockquote", children)
-
-
-
-
-# ParentNode
-    #ChildNode
-        #LeadNode
-        #LeafNode
-    #ChildNode
-    #LeafNode
