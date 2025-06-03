@@ -19,8 +19,8 @@ def generate_page(basepath, from_path, template_path, dest_path):
     title = extract_title(markdown_content)
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html)
-    template = template.replace("href=\"/", f"href=\"{basepath}")
-    template = template.replace("src=\"/", f"src=\"{basepath}")
+    template = template.replace('href="/', 'href="' + basepath)
+    template = template.replace('src="/', 'src="' + basepath)
 
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":
@@ -46,20 +46,3 @@ def extract_title(md):
         if line.startswith("# "):
             return line[2:]
     raise ValueError("no title found")
-
-
-
-#
-
-def copy_files_recursive(source_dir_path, dest_dir_path):
-    if not os.path.exists(dest_dir_path):
-        os.mkdir(dest_dir_path)
-
-    for filename in os.listdir(source_dir_path):
-        from_path = os.path.join(source_dir_path, filename)
-        dest_path = os.path.join(dest_dir_path, filename)
-        print(f" * {from_path} -> {dest_path}")
-        if os.path.isfile(from_path):
-            shutil.copy(from_path, dest_path)
-        else:
-            copy_files_recursive(from_path, dest_path)
