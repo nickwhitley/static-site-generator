@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from block_markdown import markdown_to_html_node
 
 
@@ -26,16 +27,15 @@ def generate_page(from_path, template_path, dest_path):
     to_file.write(template)
 
 
-def generate_page_recursive(source_path, template_path, dest_path):
-    print(f"directories: { os.listdir(source_path) }")
-    for filename in os.listdir(source_path):
-        from_path = os.path.join(source_path, filename)
-        to_path = os.path.join(dest_path, filename)
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    for filename in os.listdir(dir_path_content):
+        from_path = os.path.join(dir_path_content, filename)
+        dest_path = os.path.join(dest_dir_path, filename)
         if os.path.isfile(from_path):
-            print(filename + " is file!!!")
+            dest_path = Path(dest_path).with_suffix(".html")
+            generate_page(from_path, template_path, dest_path)
         else:
-            print(filename + " is not file.")
-            generate_page_recursive(from_path, template_path, to_path)
+            generate_pages_recursive(from_path, template_path, dest_path)
 
 
 def extract_title(md):
